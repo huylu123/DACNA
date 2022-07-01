@@ -1,0 +1,104 @@
+﻿@model List<ClassLibrary_RepositoryDLL.Entities.CartItem>
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    double? total =0;
+}
+
+<div class="cart-page">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="cart-page-inner">
+                            <div class="table-responsive">
+                                @if(Model.Count>0)
+                                {
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Sản Phẩm</th>
+                                            <th>Giá</th>
+                                            <th>Số Lượng</th>
+                                            <th>Thành Tiền</th>
+                                            <th>Xóa</th>
+                                            <th>Update</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-middle">
+                                    @foreach(var cartItem in Model)
+                                    {
+                                    var thanhtien = cartItem.Quantity * cartItem.Book.Price;
+                                    total += thanhtien;
+                                       <form method="post" action="~/product/updatecart">
+                                        <tr>
+                                            <td>
+                                                <div class="img">
+                                                    <a href="~/Home/ProductDetail/@cartItem.Book.Id"><img src="~/image/@cartItem.Book.Image" alt="Image"></a>
+                                                    <p>@cartItem.Book.Bookname</p>
+                                                </div>
+                                            </td>
+                                            <td>@cartItem.Book.Price</td>
+                                            <td>
+                                                <div class="qty">
+                                                    @*<button class="btn-minus"><i class="fa fa-minus"></i></button> *@
+                                                    @Html.Hidden("BookId",@cartItem.Book.Id);
+                                                    @Html.TextBox("Quantity",@cartItem.Quantity);
+                                                    @*<button class="btn-plus"><i class="fa fa-plus"></i></button>*@
+                                                </div>
+                                            </td>
+                                            <td>@thanhtien</td>
+                                            <td><a asp-action="RemoveCartItem" asp-route-id="@cartItem.BookId"><i class="fa fa-trash"></i></a></td>
+                                           <td>
+                                                <a data-id="@cartItem.Book.Id" data-qty="@cartItem.Quantity">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+                                  
+                                            </td>
+                                      
+
+
+                                        </tr>
+                                     </form>
+                                    
+                                    }
+                                    </tbody>
+                                </table>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+
+                        <div class="cart-page-inner">
+
+                            <div class="row">
+                                
+                                <div class="col-md-12">
+                                    <div class="cart-summary">
+                                   
+                                        <div class="cart-content">
+                                            <h1>Tổng Thanh Toán</h1>
+                                            <p>Thành Tiền: <span>@total</span></p>
+                                            <p>Giá Ship: <span>$1</span></p>
+                                            <h2>Tổng Tiền: <span>@total</span></h2>
+                                        </div>
+                                        <div class="cart-btn">
+                                            <a asp-controller="Home" asp-action="Checkout" class="btn btn-success">Thanh Toán</a>
+                                        </div>
+                                  
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>

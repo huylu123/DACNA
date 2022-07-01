@@ -1,0 +1,140 @@
+﻿@inject ClassLibrary_RepositoryDLL.Services.IProductService ptservice 
+@inject ClassLibrary_RepositoryDLL.Services.IMenuService mnservice
+@inject ClassLibrary_RepositoryDLL.Services.IAuthorService auservice
+@model ClassLibrary_RepositoryDLL.Entities.CartItem
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<div class="product-view">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="product-view-top">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="product-search">
+                                                <input type="email" value="Tìm Kiếm">
+                                                <button><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="product-short">
+                                                <div class="dropdown">
+                                                    <div class="dropdown-toggle" data-toggle="dropdown">Sắp Xếp Theo</div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a href="#" class="dropdown-item">Mới Nhất</a>
+                                                        <a href="#" class="dropdown-item">Phổ Biến</a>
+                                                        <a href="#" class="dropdown-item">Bán Chạy</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="product-price-range">
+                                                <div class="dropdown">
+                                                    <div class="dropdown-toggle" data-toggle="dropdown">Giá Từ</div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a href="#" class="dropdown-item">$0 to $50</a>
+                                                        <a href="#" class="dropdown-item">$51 to $100</a>
+                                                        <a href="#" class="dropdown-item">$101 to $150</a>
+                                                        <a href="#" class="dropdown-item">$151 to $200</a>
+                                                        <a href="#" class="dropdown-item">$201 to $250</a>
+                                                        <a href="#" class="dropdown-item">$251 to $300</a>
+                                                        <a href="#" class="dropdown-item">$301 to $350</a>
+                                                        <a href="#" class="dropdown-item">$351 to $400</a>
+                                                        <a href="#" class="dropdown-item">$401 to $450</a>
+                                                        <a href="#" class="dropdown-item">$451 to $500</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                     @foreach(var item in ptservice.getAllBook() as List<ClassLibrary_RepositoryDLL.Models.ProductModel>)       
+                         {   
+                         <div class="col-md-4">
+                                <div class="product-item">
+                                    <div class="product-title">
+                                        <a href="#">@item.Name</a>
+                                        <div class="ratting">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-image">
+                                        <a href="#">
+                                            <img src="~/image/@item.Image" alt="Product Image">
+                                        </a>
+                                        <div class="product-action">
+                                            <a href="~/product/AddToCart/@item.Id"><i class="fa fa-cart-plus"></i></a>
+                                            <a href="~/Home/Wishlist"><i class="fa fa-heart"></i></a>
+                                            <a href="~/Home/ProductDetail/@item.Id"><i class="fa fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="product-price">
+                                        <h3>@item.Price<span>.000đ</span></h3>
+                                        <a class="btn" href="~/product/AddToCart/@item.Id"><i class="fa fa-shopping-cart"></i>Mua Ngay</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        </div>
+                        
+                        <!-- Pagination Start -->
+                        <div class="col-md-12">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Trước</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Sau</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- Pagination Start -->
+                    </div>           
+                    
+                    <!-- Side Bar Start -->
+                    <div class="col-lg-4 sidebar">
+                        <div class="sidebar-widget category">
+                            <h2 class="title">Danh Mục</h2>
+                            <nav class="navbar bg-light">
+                                <ul class="navbar-nav">
+                                     @foreach(var item in mnservice.getAllCategories() as List<ClassLibrary_RepositoryDLL.Entities.Category>)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="~/Home/Product/@item.Categoryname"><i class="fa fa-female"></i>@item.Categoryname</a>
+                                    </li>
+                                }
+                                </ul>
+                            </nav>
+                        </div>
+                        
+                        <div class="sidebar-widget brands">
+                            <h2 class="title">Nhà Xuất Bản</h2>
+                       
+                            <ul>
+                        @foreach(var item in auservice.getAllAuthor() as List<ClassLibrary_RepositoryDLL.Entities.Author>)
+                        {
+                                <li><a href="~/Home/Product/@item.Books">@item.Authorname</a></li>
+                        }
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- Side Bar End -->
+                </div>
+            </div>
+        </div>

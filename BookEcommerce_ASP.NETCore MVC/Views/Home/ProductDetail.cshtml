@@ -1,0 +1,190 @@
+﻿@inject ClassLibrary_RepositoryDLL.Services.IMenuService mnservice
+@inject ClassLibrary_RepositoryDLL.Services.IProductService ptservice
+@inject ClassLibrary_RepositoryDLL.Services.IAuthorService auservice
+@model ClassLibrary_RepositoryDLL.Entities.Book
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+        <!-- Product Detail Start -->
+        <div class="product-detail">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="product-detail-top">
+                            <div class="row align-items-center">
+                                <div class="col-md-5">
+                                    <div class="product-slider-single normal-slider">
+                                        <img src="~/image/@Model.Image" alt="Product Image">
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                     
+                                    <div class="product-content">
+                                        <div class="title"><h2>@Model.Bookname</h2></div>
+
+                                        <div class="price">
+                                            <h4>Price:</h4>
+                                            <p>@Model.Price</p><p>.000đ</p>
+                                        </div>
+                                        
+                                        <div class="action">
+                                            <a class="btn" href="#"><i class="fa fa-shopping-cart"></i>Thêm Vào Giỏ</a>
+                                            <a class="btn" href="~/product/AddToCart/@Model.Id"><i class="fa fa-shopping-bag"></i>Mua Ngay</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row product-detail-bottom">
+                            <div class="col-lg-12">
+                                <ul class="nav nav-pills nav-justified">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="pill" href="#description">Mô Tả</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="pill" href="#specification">Thông Tin Chi Tiết</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="pill" href="#reviews">Đánh Giá</a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div id="description" class="container tab-pane active">
+                                        <h4>Mô Tả Sản Phẩm</h4>
+                                        @foreach(var item in Model.Reviews)
+                                        {@item.Comment}
+                                        <p>
+                                           @Model.Description
+                                    </div>
+                                    <div id="specification" class="container tab-pane fade">
+                                        <h4>Thông Tin Chi Tiết</h4>
+                                        @foreach(var item in ptservice.getAllBook() as List<ClassLibrary_RepositoryDLL.Models.ProductModel>)
+                                        {
+                                            @*@Model.Description*@
+                                        }
+                                    </div>
+                                    <div id="reviews" class="container tab-pane fade">
+                                        @foreach(var item in Model.Reviews)
+                                        {
+                                        <div class="reviews-submitted">
+                                            <div class="reviewer">@item.AccountId <span>@item.Id</span></div>
+                                            <div class="ratting">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <p>
+                                               @item.Comment
+                                            </p>
+                                        </div>
+                                        }
+                                        <div class="reviews-submit">
+                                            <h4>Gửi Đánh Giá: </h4>
+                                            <div class="ratting">
+                                                <i class="far fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                            </div>
+                                            <div class="row form">
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="Name">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input type="email" placeholder="Email">
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <textarea placeholder="Review"></textarea>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <button>Gửi</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product">
+                            <div class="section-header">
+                                <h1>Sản Phẩm Tương Tự</h1>
+                            </div>
+
+                            <div class="row align-items-center product-slider product-slider-3">
+                                @foreach(var item in ptservice.getAllBook() as List<ClassLibrary_RepositoryDLL.Models.ProductModel>)
+                                {
+                                <div class="col-lg-3">
+                                    <div class="product-item">
+                                        
+                                            <div class="product-title">
+                                            <a href="#">@item.Name</a>
+                                            <div class="ratting">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <div class="product-image">
+                                            <a href="product-detail.html">
+                                                <img src="~/image/@item.Image" alt="Product Image">
+                                            </a>
+                                            <div class="product-action">
+                                                <a href="#"><i class="fa fa-cart-plus"></i></a>
+                                                <a href="#"><i class="fa fa-heart"></i></a>
+                                                <a href="~/Home/ProductDetail/@item.Id"><i class="fa fa-search"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-price">
+                                            <h3>@item.Price<span>.000đ</span></h3>
+                                            <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Mua Ngay</a>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Side Bar Start -->
+                    <div class="col-lg-4 sidebar">
+                        <div class="sidebar-widget category">
+                            <h2 class="title">Danh Mục</h2>
+                            <nav class="navbar bg-light">
+                                <ul class="navbar-nav">
+                                              @foreach(var item in mnservice.getAllCategories() as List<ClassLibrary_RepositoryDLL.Entities.Category>)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="~/Home/Product/@item.Categoryname"><i class="fa fa-female"></i>@item.Categoryname</a>
+                                    </li>
+                                }
+                                </ul>
+                            </nav>
+                        </div>
+                        
+                        <div class="sidebar-widget brands">
+                            <h2 class="title">Nhà Xuất Bản</h2>
+                            <ul>
+                                 @foreach(var item in auservice.getAllAuthor() as List<ClassLibrary_RepositoryDLL.Entities.Author>)
+                                {
+                                     <li><a href="~/Home/Product/@item.Books">@item.Authorname</a></li>
+                                 }
+                            </ul>
+                        </div>
+                        
+   
+                    </div>
+                    <!-- Side Bar End -->
+                </div>
+            </div>
+        </div>
+        <!-- Product Detail End -->

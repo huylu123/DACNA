@@ -1,0 +1,175 @@
+﻿@inject ClassLibrary_RepositoryDLL.Services.IMenuService mnservice
+@inject ClassLibrary_RepositoryDLL.Services.IProductService ptservice
+
+@model ClassLibrary_RepositoryDLL.Models.ProductModel
+<div class="header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <nav class="navbar bg-light">
+
+                            
+                            <ul class="navbar-nav">
+                                   @foreach (var item in mnservice.getAllCategories() as List<ClassLibrary_RepositoryDLL.Entities.Category>)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="~/Home/Product/@item.Categoryname"><i class="fa fa-home"></i>@item.Categoryname</a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+         
+            <div class="col-md-6">
+                        <div class="header-slider normal-slider">
+                        @foreach(var item in ptservice.getAllBook() as List<ClassLibrary_RepositoryDLL.Models.ProductModel>)
+                            {
+                            <div class="header-slider-item">
+                                 <div class="product-image">
+                                         <a href="~/Home/ProductDetail/@item.Id">
+                                            <img src="~/image/@item.Image" alt="Slider Image"/>
+                                         </a> 
+                                        <div class="header-slider-caption">
+                                             <a href="~/Home/ProductDetail/@item.Id"><p>@item.Name</p></a> 
+                                             <a class="btn" href="~/product/AddToCart/@item.Id"><i class="fa fa-shopping-cart"></i>Mua Ngay</a>
+                                        </div>
+                                 </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main Slider End -->         
+        
+        <!-- Feature Start-->
+        <div class="feature">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-6 feature-col">
+                        <div class="feature-content">
+                            <i class="fab fa-cc-mastercard"></i>
+                            <h2>Secure Payment</h2>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur elit
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 feature-col">
+                        <div class="feature-content">
+                            <i class="fa fa-truck"></i>
+                            <h2>Worldwide Delivery</h2>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur elit
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 feature-col">
+                        <div class="feature-content">
+                            <i class="fa fa-sync-alt"></i>
+                            <h2>90 Days Return</h2>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur elit
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 feature-col">
+                        <div class="feature-content">
+                            <i class="fa fa-comments"></i>
+                            <h2>24/7 Support</h2>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur elit
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Feature End-->              
+        <!-- Featured Product Start -->
+        <div class="featured-product product">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h1>Sách Bán Chạy</h1>
+                </div>
+                <div class="row align-items-center product-slider product-slider-4">
+             @foreach (var item in ptservice.getAllBook() as List<ClassLibrary_RepositoryDLL.Models.ProductModel>)  
+                 {
+                        <div class="col-lg-3">
+                                    <div class="product-item">
+                                        <div class="product-title">
+                                            <a href="~/Home/ProductDetail/@item.Id">@item.Name</a>
+                                            <div class="ratting">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <div class="product-image">
+                                            <a href="~/Home/ProductDetail/@item.Id">
+                                                <img src="/image/@item.Image" alt="Product Image">
+                                            </a>
+                                            <div class="product-action">
+                                                <a href="~/product/AddToCart/@item.Id"><i class="fa fa-cart-plus"></i></a>
+                                                <a href="~/Home/Wishlist"><i class="fa fa-heart"></i></a>
+                                                <a href="~/Home/ProductDetail/@item.Id"><i class="fa fa-search"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-price">
+                                            <h3>@item.Price<span>.000đ</span></h3>
+                                            <a class="btn" href="~/product/AddToCart/@item.Id"><i class="fa fa-shopping-cart"></i>Mua Ngay</a>
+                                        </div>
+                                    </div>
+                         </div>
+                  } 
+                </div>
+            </div>
+        </div>
+        <!-- Featured Product End -->       
+          
+        <!-- Recent Product Start -->
+         <div class="recent-product product">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h1>Sách Mới</h1>
+                </div>
+                <div class="row align-items-center product-slider product-slider-4">
+                @foreach (var item in ptservice.getAllBook()as List<ClassLibrary_RepositoryDLL.Models.ProductModel>)
+                {
+            
+                <div class="col-lg-3">
+                        <div class="product-item">
+                            <div class="product-title">
+                                <a href="#">@item.Name</a>
+                                <div class="ratting">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="product-image">
+                                <a href="~/home/ProductDetail/@item.Id">
+                                    <img src="~/image/@item.Image" alt="Product Image">
+                                </a>
+                                <div class="product-action">
+                                    <a href="~/product/AddToCart/@item.Id"><i class="fa fa-cart-plus"></i></a>
+                                    <a href="#"><i class="fa fa-heart"></i></a>
+                                    <a href="#"><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="product-price">
+                                <h3>@item.Price<span>.000đ</span></h3>
+                                <a class="btn" href="~/product/AddToCart/@item.Id"><i class="fa fa-shopping-cart"></i>Mua Ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </div>
+            </div>
+        </div>
+        <!-- Recent Product End -->
