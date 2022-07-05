@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace BookEcommerce_ASP.NETCore_MVC.Entities
 {
-    public partial class Checkout
+    public class Checkout
     {
         public int Id { get; set; }
         public int? AccountId { get; set; }
